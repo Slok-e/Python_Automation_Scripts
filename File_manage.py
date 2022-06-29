@@ -1,9 +1,11 @@
-from fileinput import filename
 import os
 import sys
 import time
+import shutil
 import logging
+import fileinput
 from os import listdir
+from fileinput import filename
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from watchdog.events import LoggingEventHandler
@@ -13,8 +15,15 @@ source_dir = "/Users/kelsobroderick/Downloads"
 dest_image = "/Users/kelsobroderick/Desktop/Download\(Sorted\)/Images"
 dest_music = "/Users/kelsobroderick/Desktop/Download\(Sorted\)/Music"
 dest_sfx = "/Users/kelsobroderick/Desktop/Download\(Sorted\)/Music/Sfx"
+dest_video = "/Users/kelsobroderick/Desktop/Download\(Sorted\)/Video"
 
+#Defines
 def move(dest, entry, name):
+    file_exist = os.path.exists(dest + "/" + name)
+    if file_exist:
+        unique_name = makeUnique(name)
+        os.rename(entry,unique_name)
+    shutil.move(entry,dest)
 
 
 class Handler(FileSystemEventHandler):
