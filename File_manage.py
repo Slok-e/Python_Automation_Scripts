@@ -1,3 +1,4 @@
+from csv import field_size_limit
 import os
 import sys
 import time
@@ -8,8 +9,6 @@ from os import listdir
 from fileinput import filename
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
-from watchdog.events import LoggingEventHandler
-from watchdog.events import DirCreatedEvent
 
 source_dir = "/Users/kelsobroderick/Downloads"
 dest_image = "/Users/kelsobroderick/Desktop/Download\(Sorted\)/Images"
@@ -17,7 +16,7 @@ dest_music = "/Users/kelsobroderick/Desktop/Download\(Sorted\)/Music"
 dest_sfx = "/Users/kelsobroderick/Desktop/Download\(Sorted\)/Music/Sfx"
 dest_video = "/Users/kelsobroderick/Desktop/Download\(Sorted\)/Video"
 
-#Defines
+#Defines the funcion move
 def move(dest, entry, name):
     file_exist = os.path.exists(dest + "/" + name)
     if file_exist:
@@ -25,14 +24,14 @@ def move(dest, entry, name):
         os.rename(entry,unique_name)
     shutil.move(entry,dest)
 
-
 class Handler(FileSystemEventHandler):
     def on_modified(self, event):
        with os.scandir(source_dir) as entries:
         for entry in entries:
             name = entry.name
             dest = source_dir
-            if name.endswith(".wav")
+            if name.endswith(".wav") or name.endswith(".mp3") or name.endwitg(".mp4"):
+                if fileinput
             return super().on_modified(event)
     
 
