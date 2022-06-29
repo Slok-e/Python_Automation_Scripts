@@ -1,4 +1,3 @@
-from csv import field_size_limit
 import os
 import sys
 import time
@@ -16,7 +15,18 @@ dest_music = "/Users/kelsobroderick/Desktop/Download\(Sorted\)/Music"
 dest_sfx = "/Users/kelsobroderick/Desktop/Download\(Sorted\)/Music/Sfx"
 dest_video = "/Users/kelsobroderick/Desktop/Download\(Sorted\)/Video"
 
-#Defines the funcion move
+# Function to add 1 to repeated file name
+def makeUnique(dest, name):
+    filename, extension = os.path.splitext(path)
+    counter = 1
+    while os.path.exists(path):
+        path = filename + "(" + str(counter) +")" + extension
+        counter += 1
+    
+
+    return path
+
+#Function to move a file
 def move(dest, entry, name):
     file_exist = os.path.exists(dest + "/" + name)
     if file_exist:
