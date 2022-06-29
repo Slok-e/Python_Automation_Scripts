@@ -1,3 +1,4 @@
+from fileinput import filename
 import os
 import sys
 import time
@@ -9,18 +10,30 @@ from watchdog.events import LoggingEventHandler
 from watchdog.events import DirCreatedEvent
 
 source_dir = "/Users/kelsobroderick/Downloads"
+dest_image = "/Users/kelsobroderick/Desktop/Download\(Sorted\)/Images"
+dest_music = "/Users/kelsobroderick/Desktop/Download\(Sorted\)/Music"
+dest_sfx = "/Users/kelsobroderick/Desktop/Download\(Sorted\)/Music/Sfx"
 
-with os.scandir(source_dir) as entries:
-    for entry in entries:
-        print(entry.name)
+def move(dest, entry, name):
+
+
+class Handler(FileSystemEventHandler):
+    def on_modified(self, event):
+       with os.scandir(source_dir) as entries:
+        for entry in entries:
+            name = entry.name
+            dest = source_dir
+            if name.endswith(".wav")
+            return super().on_modified(event)
+    
 
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s - %(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S')
-    path = sys.argv[1] if len(sys.argv) > 1 else '.'
-    event_handler = LoggingEventHandler()
+    path = source_dir
+    event_handler = Handler()
     observer = Observer()
     observer.schedule(event_handler, path, recursive=True)
     observer.start()
