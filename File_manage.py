@@ -13,19 +13,20 @@ dest_sfx = "/Users/kelsobroderick/Desktop/Download\(Sorted\)/Music/Sfx"
 dest_video = "/Users/kelsobroderick/Desktop/Download\(Sorted\)/Video"
 dest_documents = "/Users/kelsobroderick/Desktop/Download\(Sorted\)/Documents"
 
-# Image file types:
-image_extensions = [".jpg", ".jpeg", ".jpe", ".jif", ".jfif", ".jfi", ".png", ".gif", ".webp", ".tiff", ".tif", ".psd", ".raw", ".arw", ".cr2", ".nrw",
-                    ".k25", ".bmp", ".dib", ".heif", ".heic", ".ind", ".indd", ".indt", ".jp2", ".j2k", ".jpf", ".jpf", ".jpx", ".jpm", ".mj2", ".svg", ".svgz", ".ai", ".eps", ".ico"]
+
+# Audio file types:
+audio_extensions = [".m4a", ".flac", "mp3", ".wav", ".wma", ".aac"]
 # Video file types:
 video_extensions = [".webm", ".mpg", ".mp2", ".mpeg", ".mpe", ".mpv", ".ogg",
                     ".mp4", ".mp4v", ".m4v", ".avi", ".wmv", ".mov", ".qt", ".flv", ".swf", ".avchd"]
-# Audio file types:
-audio_extensions = [".m4a", ".flac", "mp3", ".wav", ".wma", ".aac"]
+# Image file types:
+image_extensions = [".jpg", ".jpeg", ".jpe", ".jif", ".jfif", ".jfi", ".png", ".gif", ".webp", ".tiff", ".tif", ".psd", ".raw", ".arw", ".cr2", ".nrw",
+                    ".k25", ".bmp", ".dib", ".heif", ".heic", ".ind", ".indd", ".indt", ".jp2", ".j2k", ".jpf", ".jpf", ".jpx", ".jpm", ".mj2", ".svg", ".svgz", ".ai", ".eps", ".ico"]
 # Document file types:
-document_extensions = [".doc", ".docx", ".odt",
+doc_extensions = [".doc", ".docx", ".odt",
                        ".pdf", ".xls", ".xlsx", ".ppt", ".pptx"]
 
-# Function to add 1 to repeated file name
+# Function to add 1 to end of duplicate download.
 def makeUnique(dest, name):
     filename, extension = splitext(name)
     counter = 1
@@ -35,7 +36,7 @@ def makeUnique(dest, name):
     
     return path
 
-#Function to move a file
+#Function to move a file.
 def move(dest, entry, name):
     if exists(f"{dest}/{name}"):
         unique_name = makeUnique(dest,name)
@@ -44,7 +45,7 @@ def move(dest, entry, name):
         rename(entry,unique_name)
     move(entry,dest)
 
-# This runs when
+# This runs when a directory is modified (scandir) i.e. file added to directory.
 class Handler(FileSystemEventHandler):
     def on_modified(self, event):
        with scandir(source_dir) as entries:
@@ -62,6 +63,14 @@ class Handler(FileSystemEventHandler):
             if name.endswith(video_extensions) or name.endswith(video_extensions.upper()):
                 move(video_extensions, entry, name)
                 logging.info(f"Moved video file: {name}")
+        for image_extensions in image_extensions:
+            if name.endswith(image_extensions) or name.endswith(image_extensions.upper()):
+                move(image_extensions, entry, name)
+                logging.info(f"Moved image file: {name}")
+        for doc_extensions in doc_extensions:
+            if name.endswith(doc_extensions) or name.endswith(doc_extensions.upper()):
+                move(doc_extensions, entry, name)
+                logging.info(f"Moved document file: {name}")
 
     if __name__ == "__main__":
         logging.basicConfig(level=logging.INFO,
