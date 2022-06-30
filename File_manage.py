@@ -1,8 +1,10 @@
-import shutil
+from shutil import move
 import logging
 import time
+
 from os import scandir, rename
 from os.path import splitext, exists, join
+
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
@@ -31,18 +33,18 @@ def makeUnique(dest, name):
     filename, extension = splitext(name)
     counter = 1
     while exists(f"{dest}/{name}"):
-        path = (f"{filename}({str(counter)}){extension}")
+        path = f"{filename}({str(counter)}){extension}"
         counter += 1
     
-    return path
+    return name
 
 #Function to move a file.
-def move(dest, entry, name):
+def move_file(dest, entry, name):
     if exists(f"{dest}/{name}"):
         unique_name = makeUnique(dest,name)
-        oldName = join(dest,name)
-        newName = join(dest,unique_name)
-        rename(entry,unique_name)
+        oldName = join(dest, name)
+        newName = join(dest, unique_name)
+        rename(oldName, newName)
     move(entry,dest)
 
 # This runs when a directory is modified (scandir) i.e. file added to directory.
@@ -51,29 +53,32 @@ class Handler(FileSystemEventHandler):
        with scandir(source_dir) as entries:
         for entry in entries:
             name = entry.name
+        
         for audio_extensions in audio_extensions:
             if name.endswith(audio_extensions) or name.endswith(audio_extensions.upper()):
                 if entry.stat().st_size < 10000000 or "SFX" in name:
                     dest = dest_sfx
                 else:
                     dest = dest_music
-                move(dest, entry, name)
+                move_file(dest, entry, name)
                 logging.info(f"Moved audio file: (name)")
+        
         for video_extensions in video_extensions:
             if name.endswith(video_extensions) or name.endswith(video_extensions.upper()):
-                move(dest_video, entry, name)
+                move_file(dest_video, entry, name)
                 logging.info(f"Moved video file: {name}")
+        
         for image_extensions in image_extensions:
             if name.endswith(image_extensions) or name.endswith(image_extensions.upper()):
-                move(dest_image, entry, name)
+                move_file(dest_image, entry, name)
                 logging.info(f"Moved image file: {name}")
+        
         for doc_extensions in doc_extensions:
             if name.endswith(doc_extensions) or name.endswith(doc_extensions.upper()):
-                move(dest_documents, entry, name)
+                move_file(dest_documents, entry, name)
                 logging.info(f"Moved document file: {name}")
 
-    
-    
+
     if __name__ == "__main__":
         logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s - %(message)s',
