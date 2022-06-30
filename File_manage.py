@@ -1,6 +1,6 @@
-import time
 import shutil
 import logging
+import time
 from os import scandir, rename
 from os.path import splitext, exists, join
 from watchdog.observers import Observer
@@ -46,7 +46,7 @@ def move(dest, entry, name):
     move(entry,dest)
 
 # This runs when a directory is modified (scandir) i.e. file added to directory.
-class FileSystemEventHandler(FileSystemEventHandler):
+class Handler(FileSystemEventHandler):
     def on_modified(self, event):
        with scandir(source_dir) as entries:
         for entry in entries:
@@ -85,7 +85,7 @@ class FileSystemEventHandler(FileSystemEventHandler):
     observer.start()
     try:
         while True:
-            time.sleep(1)
+            time.sleep(10)
     except KeyboardInterrupt:
         observer.stop()
     observer.join()
