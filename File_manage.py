@@ -9,11 +9,11 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
 source_dir = "/Users/kelsobroderick/Downloads"
-dest_image = "/Users/kelsobroderick/Desktop/Download\(Sorted\)/Images"
-dest_music = "/Users/kelsobroderick/Desktop/Download\(Sorted\)/Music"
-dest_sfx = "/Users/kelsobroderick/Desktop/Download\(Sorted\)/Music/Sfx"
-dest_video = "/Users/kelsobroderick/Desktop/Download\(Sorted\)/Video"
-dest_documents = "/Users/kelsobroderick/Desktop/Download\(Sorted\)/Documents"
+dest_image = "/Users/kelsobroderick/Desktop/Download_sorted/Images"
+dest_music = "/Users/kelsobroderick/Desktop/Download_sorted/Music"
+dest_sfx = "/Users/kelsobroderick/Desktop/Download_sorted/Music/Sfx"
+dest_video = "/Users/kelsobroderick/Desktop/Download_sorted/Video"
+dest_documents = "/Users/kelsobroderick/Desktop/Download_sorted/Documents"
 
 
 # Audio file types:
