@@ -46,7 +46,7 @@ def move(dest, entry, name):
     move(entry,dest)
 
 # This runs when a directory is modified (scandir) i.e. file added to directory.
-class Handler(FileSystemEventHandler):
+class FileSystemEventHandler(FileSystemEventHandler):
     def on_modified(self, event):
        with scandir(source_dir) as entries:
         for entry in entries:
@@ -61,17 +61,19 @@ class Handler(FileSystemEventHandler):
                 logging.info(f"Moved audio file: (name)")
         for video_extensions in video_extensions:
             if name.endswith(video_extensions) or name.endswith(video_extensions.upper()):
-                move(video_extensions, entry, name)
+                move(dest_video, entry, name)
                 logging.info(f"Moved video file: {name}")
         for image_extensions in image_extensions:
             if name.endswith(image_extensions) or name.endswith(image_extensions.upper()):
-                move(image_extensions, entry, name)
+                move(dest_image, entry, name)
                 logging.info(f"Moved image file: {name}")
         for doc_extensions in doc_extensions:
             if name.endswith(doc_extensions) or name.endswith(doc_extensions.upper()):
-                move(doc_extensions, entry, name)
+                move(dest_documents, entry, name)
                 logging.info(f"Moved document file: {name}")
 
+    
+    
     if __name__ == "__main__":
         logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s - %(message)s',
