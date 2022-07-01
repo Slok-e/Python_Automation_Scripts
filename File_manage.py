@@ -52,8 +52,8 @@ class Handler(FileSystemEventHandler):
     def on_modified(self, event):
        with scandir(source_dir) as entries:
         for entry in entries:
-            name = entry.name
-        
+            name = entry.name        
+    def check_all_files(self, entry, name):
         for audio_extensions in audio_extensions:
             if name.endswith(audio_extensions) or name.endswith(audio_extensions.upper()):
                 if entry.stat().st_size < 10000000 or "SFX" in name:
@@ -61,30 +61,27 @@ class Handler(FileSystemEventHandler):
                 else:
                     dest = dest_music
                 move_file(dest, entry, name)
-                logging.info(f"Moved audio file: (name)")
-        
+                logging.info(f"Moved audio file: (name)")        
         for video_extensions in video_extensions:
             if name.endswith(video_extensions) or name.endswith(video_extensions.upper()):
                 move_file(dest_video, entry, name)
-                logging.info(f"Moved video file: {name}")
-        
+                logging.info(f"Moved video file: {name}")        
         for image_extensions in image_extensions:
             if name.endswith(image_extensions) or name.endswith(image_extensions.upper()):
                 move_file(dest_image, entry, name)
-                logging.info(f"Moved image file: {name}")
-        
+                logging.info(f"Moved image file: {name}")        
         for doc_extensions in doc_extensions:
             if name.endswith(doc_extensions) or name.endswith(doc_extensions.upper()):
                 move_file(dest_documents, entry, name)
                 logging.info(f"Moved document file: {name}")
 
 
-    if __name__ == "__main__":
-        logging.basicConfig(level=logging.INFO,
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s - %(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S')
     path = source_dir
-    event_handler = FileSystemEventHandler()
+    event_handler = Handler()
     observer = Observer()
     observer.schedule(event_handler, path, recursive=True)
     observer.start()
