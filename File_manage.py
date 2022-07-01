@@ -15,19 +15,6 @@ dest_sfx = "/Users/kelsobroderick/Desktop/Download_sorted/Music/Sfx"
 dest_video = "/Users/kelsobroderick/Desktop/Download_sorted/Video"
 dest_documents = "/Users/kelsobroderick/Desktop/Download_sorted/Documents"
 
-
-# Audio file types:
-audio_extensions = [".m4a", ".flac", "mp3", ".wav", ".wma", ".aac"]
-# Video file types:
-video_extensions = [".webm", ".mpg", ".mp2", ".mpeg", ".mpe", ".mpv", ".ogg",
-                    ".mp4", ".mp4v", ".m4v", ".avi", ".wmv", ".mov", ".qt", ".flv", ".swf", ".avchd"]
-# Image file types:
-image_extensions = [".jpg", ".jpeg", ".jpe", ".jif", ".jfif", ".jfi", ".png", ".gif", ".webp", ".tiff", ".tif", ".psd", ".raw", ".arw", ".cr2", ".nrw",
-                    ".k25", ".bmp", ".dib", ".heif", ".heic", ".ind", ".indd", ".indt", ".jp2", ".j2k", ".jpf", ".jpf", ".jpx", ".jpm", ".mj2", ".svg", ".svgz", ".ai", ".eps", ".ico"]
-# Document file types:
-doc_extensions = [".doc", ".docx", ".odt",
-                       ".pdf", ".xls", ".xlsx", ".ppt", ".pptx"]
-
 # Function to add 1 to end of duplicate download.
 def makeUnique(dest, name):
     filename, extension = splitext(name)
@@ -48,12 +35,29 @@ def move_file(dest, entry, name):
     move(entry,dest)
 
 # This runs when a directory is modified (scandir) i.e. file added to directory.
+# It self checks the file extension type and allocates it to a location specified by th chosen directory.
 class Handler(FileSystemEventHandler):
     def on_modified(self, event):
        with scandir(source_dir) as entries:
         for entry in entries:
-            name = entry.name        
+            name = entry.name
+            self.check_all_files(entry, name)
+
+    # Function to scan all file types and extentions.
     def check_all_files(self, entry, name):
+        
+        # Audio file types:
+        audio_extensions = [".m4a", ".flac", "mp3", ".wav", ".wma", ".aac"]
+        # Video file types:
+        video_extensions = [".webm", ".mpg", ".mp2", ".mpeg", ".mpe", ".mpv", ".ogg",
+                    ".mp4", ".mp4v", ".m4v", ".avi", ".wmv", ".mov", ".qt", ".flv", ".swf", ".avchd"]
+        # Image file types:
+        image_extensions = [".jpg", ".jpeg", ".jpe", ".jif", ".jfif", ".jfi", ".png", ".gif", ".webp", ".tiff", ".tif", ".psd", ".raw", ".arw", ".cr2", ".nrw",
+                    ".k25", ".bmp", ".dib", ".heif", ".heic", ".ind", ".indd", ".indt", ".jp2", ".j2k", ".jpf", ".jpf", ".jpx", ".jpm", ".mj2", ".svg", ".svgz", ".ai", ".eps", ".ico"]
+        # Document file types:
+        doc_extensions = [".doc", ".docx", ".odt",
+                       ".pdf", ".xls", ".xlsx", ".ppt", ".pptx"]
+        
         for audio_extensions in audio_extensions:
             if name.endswith(audio_extensions) or name.endswith(audio_extensions.upper()):
                 if entry.stat().st_size < 10000000 or "SFX" in name:
@@ -75,7 +79,7 @@ class Handler(FileSystemEventHandler):
                 move_file(dest_documents, entry, name)
                 logging.info(f"Moved document file: {name}")
 
-
+# do not change
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s - %(message)s',
