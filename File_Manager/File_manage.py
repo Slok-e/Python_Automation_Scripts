@@ -81,8 +81,7 @@ class Handler(FileSystemEventHandler):
 
 # do not change
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO,
-                        filename='manager.log',
+    logging.basicConfig(filename='manager.log',
                         filemode='w',
                         format='%(asctime)s - %(message)s',
                         datefmt='%Y-%M-%D %H:%M:%S')
