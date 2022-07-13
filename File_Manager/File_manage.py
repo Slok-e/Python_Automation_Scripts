@@ -47,15 +47,15 @@ class Handler(FileSystemEventHandler):
     def check_all_files(self, entry, name):
         
         # Audio file types:
-        audio_extensions = [".m4a", ".flac", "mp3", ".wav", ".wma", ".aac"]
+        audio_extensions = [".m4a", ".flac", "mp3", ".wav", ".wma", ".aac", ".mp4"]
         # Video file types:
         video_extensions = [".webm", ".mpg", ".mp2", ".mpeg", ".mpe", ".mpv", ".ogg",
-                    ".mp4", ".mp4v", ".m4v", ".avi", ".wmv", ".mov", ".qt", ".flv", ".swf", ".avchd"]
+                            ".mp4v", ".m4v", ".avi", ".wmv", ".mov", ".qt", ".flv", ".swf", ".avchd"]
         # Image file types:
         image_extensions = [".jpg", ".jpeg", ".jpe", ".jif", ".jfif", ".jfi", ".png", ".gif", ".webp", ".tiff", ".tif", ".psd", ".raw", ".arw", ".cr2", ".nrw",
-                    ".k25", ".bmp", ".dib", ".heif", ".heic", ".ind", ".indd", ".indt", ".jp2", ".j2k", ".jpf", ".jpf", ".jpx", ".jpm", ".mj2", ".svg", ".svgz", ".ai", ".eps", ".ico"]
+                        ".k25", ".bmp", ".dib", ".heif", ".heic", ".ind", ".indd", ".indt", ".jp2", ".j2k", ".jpf", ".jpf", ".jpx", ".jpm", ".mj2", ".svg", ".svgz", ".ai", ".eps", ".ico"]
         # Document file types:
-        doc_extensions = [".doc", ".docx", ".odt",
+        doc_extensions = [".doc", ".docx", ".odt", ".pages",
                        ".pdf", ".xls", ".xlsx", ".ppt", ".pptx"]
         
         for audio_extensions in audio_extensions:
@@ -82,8 +82,10 @@ class Handler(FileSystemEventHandler):
 # do not change
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO,
+                        filename='manager.log',
+                        filemode='w',
                         format='%(asctime)s - %(message)s',
-                        datefmt='%Y-%m-%d %H:%M:%S')
+                        datefmt='%Y-%M-%D %H:%M:%S')
     path = source_dir
     event_handler = Handler()
     observer = Observer()
