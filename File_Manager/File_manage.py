@@ -82,9 +82,10 @@ class Handler(FileSystemEventHandler):
 # do not change
 if __name__ == "__main__":
     logging.basicConfig(filename='manager.log',
+                        level=logging.INFO,
                         filemode='w',
                         format='%(asctime)s - %(message)s',
-                        datefmt='%Y-%M-%D %H:%M:%S')
+                        datefmt='%m-%d-%Y %H:%M:%S')
     path = source_dir
     event_handler = Handler()
     observer = Observer()
