@@ -81,7 +81,9 @@ class Handler(FileSystemEventHandler):
 
 # do not change
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO,
+    logging.basicConfig(filename='automation.log',
+                        filemode='a',
+                        level=logging.INFO,
                         format='%(asctime)s - %(message)s',
                         datefmt='%m-%d-%Y %H:%M:%S')
     path = source_dir
