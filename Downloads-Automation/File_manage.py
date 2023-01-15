@@ -8,6 +8,7 @@ from os.path import splitext, exists, join
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
+#Mac or linux use "/Users/Whatever/Location"  or "C://" for Windows
 source_dir = "/Users/kelsobroderick/Downloads"
 dest_image = "/Users/kelsobroderick/Desktop/Download_sorted/Images"
 dest_music = "/Users/kelsobroderick/Desktop/Download_sorted/Music"
@@ -79,7 +80,7 @@ class Handler(FileSystemEventHandler):
                 move_file(dest_documents, entry, name)
                 logging.info(f"Moved document file: {name}")
 
-# do not change
+# Makes the Process Run
 if __name__ == "__main__":
     logging.basicConfig(filename='automation.log',
                         filemode='a',
